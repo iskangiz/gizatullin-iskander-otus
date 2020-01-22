@@ -23,7 +23,8 @@ jobs:
         npm ci
         npm run build --if-present
         npm test
-        cd ..\javascript-3
+        cd ..
+        cd javascript-3
         npm ci
         npm run build --if-present
         npm test
