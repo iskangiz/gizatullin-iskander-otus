@@ -1,0 +1,27 @@
+<html>
+<head>
+	<script src="scriptCustomElements.js"></script>
+    <script>
+        window.addEventListener("load", function(event) {
+            let json = `
+            {
+                "id": 1,
+                "items": [
+                    {
+                        "id": 2,
+                        "items": [{ "id": 3 }]
+                    },
+                    {
+                        "id": 4,
+                        "items": [{ "id": 5 }]
+                    }
+                ]
+            }`;
+            document.body.appendChild(new MyTree(json));
+        });
+    </script>
+</head>
+<body>
+</body>
+	
+</html>
