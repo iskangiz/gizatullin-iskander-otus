@@ -36,10 +36,9 @@ class MyLeaf extends HTMLElement {
             span.innerHTML = this.jsonObject.id;
 
             span.addEventListener('click', (e) => {
-                e.stopPropagation();
                 let ul = this.shadowRoot.querySelector('ul');
 
-                if (ul !== undefined) {
+                if (ul !== null) {
                     ul.hidden = (!ul.hidden);
                 }
             });
