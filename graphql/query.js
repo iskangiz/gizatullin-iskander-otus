@@ -21,11 +21,11 @@ const queryType = new GraphQLObjectType({
             args: {
                 productTypeId: {type: GraphQLInt}
             },
-            resolve: (source, {productTypeId}) => {
-                if (productTypeId === undefined)
+            resolve: (source, {productCategoryId}) => {
+                if (productCategoryId === undefined)
                     return data.Products;
                 else
-                    return data.Products.filter(x => x.productTypeId === productTypeId);
+                    return data.Products.filter(x => x.productCategoryId === productCategoryId);
             }
         },
         productCategories: {
