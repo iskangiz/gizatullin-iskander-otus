@@ -15,26 +15,37 @@ const queryType = new GraphQLObjectType({
             resolve: (source, {id}) => {
                 return data.Products.find(x => x.id === id);
             }
-        }
-        // },
-        // products: {
-        //     type: new GraphQLList(types.productType),
-        //     args: {
-        //         productTypeId: {type: GraphQLInt}
-        //     },
-        //     resolve: (source, {productTypeId}) => {
-        //         if (productTypeId === undefined)
-        //             return data.Products.Products;
-        //         else
-        //             return data.Products.Products.find(x => x.productTypeId === productTypeId);
-        //     }
-        // },
-        // productCategories: {
-        //     type: new GraphQLList(types.productCategoryType),
-        //     resolve: () => {
-        //         return data.ProductCategories
-        //     }
-        // }
+        },
+        products: {
+            type: new GraphQLList(types.productType),
+            args: {
+                productTypeId: {type: GraphQLInt}
+            },
+            resolve: (source, {productTypeId}) => {
+                if (productTypeId === undefined)
+                    return data.Products;
+                else
+                    return data.Products.filter(x => x.productTypeId === productTypeId);
+            }
+        },
+        productCategories: {
+            type: new GraphQLList(types.productCategoryType),
+            resolve: () => {
+                return data.ProductCategories
+            }
+        },
+        orders: {
+            type: new GraphQLList(types.orderType),
+            args: {
+                customerId: {type: GraphQLInt}
+            },
+            resolve: (source, {customerId}) => {
+                if (customerId === undefined)
+                    return data.Orders;
+                else
+                    return data.Orders.filter(x => x.customerId === customerId);;
+            }
+        },
     }
 });
 
