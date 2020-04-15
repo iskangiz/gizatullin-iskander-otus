@@ -1,5 +1,5 @@
 import React from 'react';
-import {CityInput} from "./CityInput";
+import {CitySelect} from "./CitySelect";
 
 export class WeatherApp extends React.Component {
     constructor() {
@@ -18,8 +18,9 @@ export class WeatherApp extends React.Component {
         return (
             <div>
                 <h1>Weather App</h1>
-                <CityInput input={this.state.cityInput} onTextChange={this.handleCityInputChange}/>
-                <h3>Chosen city {this.state.cityInput}</h3>
+                <CitySelect/>
+                {/*<CityInput input={this.state.cityInput} onTextChange={this.handleCityInputChange}/>*/}
+                {/*<h3>Chosen city {this.state.cityInput}</h3>*/}
             </div>
         );
     }
