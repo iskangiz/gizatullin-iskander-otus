@@ -1,16 +1,17 @@
 import React from 'react';
 import {CitySelect} from "./CitySelect";
+import  {WeatherTable} from "./WeatherTable";
 
 export class WeatherApp extends React.Component {
-    constructor() {
-        super();
-        this.state = {cityInput : ""};
+    constructor(props) {
+        super(props);
+        this.state = {citiesToShow: []};
         this.handleCityInputChange = this.handleCityInputChange.bind(this);
     }
 
-    handleCityInputChange(inputChange) {
+    handleCityInputChange(cities) {
         this.setState({
-            cityInput: inputChange
+            citiesToShow: cities
         })
     }
 
@@ -18,9 +19,8 @@ export class WeatherApp extends React.Component {
         return (
             <div>
                 <h1>Weather App</h1>
-                <CitySelect/>
-                {/*<CityInput input={this.state.cityInput} onTextChange={this.handleCityInputChange}/>*/}
-                {/*<h3>Chosen city {this.state.cityInput}</h3>*/}
+                <CitySelect onCitiesToShowChanged={this.handleCityInputChange}/>
+                <WeatherTable citiesToShow={this.state.citiesToShow} />
             </div>
         );
     }

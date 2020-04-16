@@ -1,6 +1,5 @@
 import React from 'react';
 import {DataApi} from "../Models/Api"
-import {CityModel} from "../Models/City"
 
 export class CitySelect extends React.Component {
     constructor(props) {
@@ -33,22 +32,23 @@ export class CitySelect extends React.Component {
 
     handleCheckboxChange(e) {
         let checked = e.target.checked;
-        console.log('currentCity' + this.state.currentCity.id);
+        let newAddedCities = [];
         let indexOf = this.state.addedCities.findIndex(a => a.id == this.state.currentCity.id);
         if (checked) {
             if (indexOf < 0) {
+                newAddedCities = [...this.state.addedCities, this.state.currentCity];
                 this.setState({
-                    addedCities: [...this.state.addedCities, this.state.currentCity]
+                    addedCities: newAddedCities
                 });
             }
         } else {
-            console.log('not checked');
-            console.log('addedCitiesLength' + this.state.addedCities.length);
-            console.log('indexOf' + indexOf);
+            newAddedCities = this.state.addedCities.filter(a=>a.id != this.state.currentCity.id);
             this.setState({
-                addedCities: this.state.addedCities.filter(a=>a.id != this.state.currentCity.id)
+                addedCities: newAddedCities
             });
         }
+
+        this.props.onCitiesToShowChanged(newAddedCities);
     }
 
     render() {
@@ -57,21 +57,13 @@ export class CitySelect extends React.Component {
             <option value={city.id}>{city.name}</option>
         );
 
-        let addedCities = this.state.addedCities;
-        let addedCitiesSpan = addedCities.map((city) =>
-            <span>{city.name}</span>
-        );
-
-        let checked = this.state.addedCities.findIndex(a=>a.id==this.state.currentCity.id) >= 0;
+        let checked = this.state.addedCities.findIndex(a => a.id == this.state.currentCity.id) >= 0;
         return (
             <div>
-                <select onChange={this.handleSelectChange} >
+                <select onChange={this.handleSelectChange}>
                     {optionItems}
                 </select>
-                <input type="checkbox"  checked={checked} onChange={this.handleCheckboxChange}/>
-                <div>
-                    {addedCitiesSpan}
-                </div>
+                <input type="checkbox" checked={checked} onChange={this.handleCheckboxChange}/>
             </div>
         );
     }
