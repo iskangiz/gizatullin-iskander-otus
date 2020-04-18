@@ -59,7 +59,7 @@ export class CitySelect extends React.Component {
 
         let checked = this.state.addedCities.findIndex(a => a.id == this.state.currentCity.id) >= 0;
         return (
-            <div>
+            <div class="divCitySelect">
                 <select onChange={this.handleSelectChange}>
                     {optionItems}
                 </select>

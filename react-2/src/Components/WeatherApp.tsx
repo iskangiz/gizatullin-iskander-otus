@@ -18,7 +18,6 @@ export class WeatherApp extends React.Component {
     render() {
         return (
             <div>
-                <h1>Weather App</h1>
                 <CitySelect onCitiesToShowChanged={this.handleCityInputChange}/>
                 <WeatherTable citiesToShow={this.state.citiesToShow} />
             </div>

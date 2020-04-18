@@ -1,26 +1,39 @@
 import React from 'react';
+import {DataApi} from "../Models/Api";
+import {WeatherTableRow} from "./WeatherTableRow";
+import {WeatherTableHeader} from "./WeatherTableHeader"
 
 export class WeatherTable extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {citiesToShow: this.props.citiesToShow};
-        this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+        this.state = {
+            weather: []
+        }
     }
 
-    handleFilterTextChange(e) {
-        this.props.onTextChange(e.target.value);
+    componentDidUpdate(prevProps) {
+        if (this.props.citiesToShow.length != prevProps.citiesToShow.length) {
+            let api = new DataApi();
+            let weather = api.getWeather(this.props.citiesToShow);
+            this.setState({
+                weather: weather
+            });
+        }
     }
 
     render() {
-        let addedCities = this.props.citiesToShow;
-        let addedCitiesSpan = addedCities.map((city) =>
-            <span>{city.name}</span>
+        // let api = new DataApi();
+        // let weather = api.getWeather(this.props.citiesToShow);
+        // let trs = weather.map((w) =>
+        let trs = this.state.weather.map((w) =>
+            <WeatherTableRow data={w}></WeatherTableRow>
         );
 
         return (
-            <div>
-                {addedCitiesSpan}
-            </div>
+            <table class="tbl">
+                <WeatherTableHeader />
+                {trs}
+            </table>
         );
     }
 }
