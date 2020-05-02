@@ -1,0 +1,15 @@
+.tbl {
+    width: 975px;
+    border-top:  black 1px solid;
+    text-align: center;
+}
+.tbl th {
+    height: 38px;
+}
+.iconTh {
+    width:52px;
+}
+.divCitySelect {
+    padding-bottom: 20px;
+}
+
