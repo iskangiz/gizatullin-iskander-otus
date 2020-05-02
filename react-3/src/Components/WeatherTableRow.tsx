@@ -15,7 +15,6 @@ export class WeatherTableRow extends React.Component {
             return (
                 <tr>
                     <td>{weather.date}</td>
-                    <td>{weather.cityName}</td>
                     <td><Image src={this.iconServerUrl + weather.icon}/></td>
                     <td>{weather.temp}</td>
                     <td>{weather.tempFeelsLike}</td>
