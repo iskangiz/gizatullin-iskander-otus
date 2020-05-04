@@ -1,5 +1,5 @@
 <template>
-    <div id="firstPageDiv">
+    <div>
         <h2>Привет!</h2>
         <statistics :day=24 :all-tasks=25 :solved-tasks=10 :accuracy=80></statistics>
 
@@ -32,10 +32,6 @@
 </script>
 
 <style scoped>
-    #firstPageDiv {
-        width:500px;
-        padding-left: 100px;
-    }
     #buttonDiv {
         text-align: right;
     }
