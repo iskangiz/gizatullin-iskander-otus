@@ -12,7 +12,7 @@
         <Checkbox title="Деление" :init-value=true checkbox-element-id="exponChk"></Checkbox>
         <Checkbox title="Возведение в степень" :init-value=true checkbox-element-id="divideChk"></Checkbox>
         <div id="buttonDiv">
-            <button>Play!</button>
+            <button class="btn btn-light">Play!</button>
         </div>
     </div>
 </template>
