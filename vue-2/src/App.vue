@@ -1,20 +1,13 @@
 <template>
   <div id="app">
-    <FirstPage></FirstPage>
-    <SecondPage></SecondPage>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import FirstPage from './components/FirstPage.vue'
-import SecondPage from "./components/SecondPage";
 
 export default {
   name: 'App',
-  components: {
-      FirstPage,
-      SecondPage
-  }
 }
 </script>
 

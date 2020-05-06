@@ -3,7 +3,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm" style="text-align: left">
-                    <button type="button" class="btn btn-light"><img src="../assets/cross.png">Отмена</button>
+                    <router-link :to="{name: 'Settings'}">
+                        <button type="button" class="btn btn-light"><img src="../assets/cross.png">Отмена</button>
+                    </router-link>
                 </div>
                 <div class="col-sm" style="text-align: right">
                     <Countdown :initial-countdown-in-seconds="10" @countdownEnded="countdownEnded"></Countdown>
