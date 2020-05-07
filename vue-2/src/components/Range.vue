@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="range" class="custom-range range-field" :min=minValue :max=maxValue v-model=value>
+        <input type="range" class="custom-range range-field" :min=minValue :max=maxValue v-model=value @change="onValueChanged">
         <p>{{measure}} {{value}} {{measureUnit}} </p>
     </div>
 </template>
@@ -18,6 +18,11 @@
         data: function () {
             return {
                 value: this.initValue
+            }
+        },
+        methods : {
+            onValueChanged(e) {
+                this.$emit('rangeValueChanged', e.target.value)
             }
         }
     }

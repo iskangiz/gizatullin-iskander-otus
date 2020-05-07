@@ -1,6 +1,6 @@
 <template>
     <div class="custom-control custom-checkbox">
-        <input type="checkbox" v-bind:id=checkboxElementId class="custom-control-input" v-model=value >
+        <input type="checkbox" v-bind:id=checkboxElementId class="custom-control-input" v-model=value @change="onValueChanged" >
         <label class="custom-control-label" :for=checkboxElementId>{{title}}</label>
     </div>
 </template>
@@ -16,6 +16,11 @@
         data: function () {
             return {
                 value: this.initValue
+            }
+        },
+        methods : {
+            onValueChanged(e) {
+                this.$emit('checkboxValueChanged', e.target.checked)
             }
         }
     }

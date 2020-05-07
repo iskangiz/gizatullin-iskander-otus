@@ -18,7 +18,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">1</button>
+                    <button type="button" v-on:click="buttonCl" class="btn btn-warning btn-circle btn-xl">1</button>
                 </div>
                 <div class="col-sm">
                     <button type="button" class="btn btn-warning btn-circle btn-xl">2</button>
@@ -77,6 +77,7 @@
 <script>
     import Countdown from "./Countdown";
     import Task from "./Task";
+    import {mapMutations} from "vuex";
     export default {
         name: "SecondPage",
         components: {
@@ -84,18 +85,22 @@
             Task
         },
         methods: {
+            ...mapMutations(["setVariables","setCurrentVariable","setCurrentVariableValue"]),
             countdownEnded() {
-                alert('countdownEnded!');
+                //alert('countdownEnded!');
+            },
+            buttonCl(){
+                this.$store.commit('setCurrentVariableValue',1);
             }
         },
-        data: function () {
-            return {
-                variablesToShow: [
-                    {number: 13, operation: "multiple", isHidden: false},
-                    {number: 2, operation: "multiple", isHidden: true},
-                    {number: 3240, operation: null, isHidden: true}
-                ]
-            }
+        created() {
+            let variablesToShow=  [
+                {number: 13, operation: "multiple", isHidden: false},
+                {number: 2, operation: "multiple", isHidden: true},
+                {number: 3240, operation: null, isHidden: true}
+            ];
+            this.$store.commit('setVariables', variablesToShow);
+            this.$store.commit('setCurrentVariable', variablesToShow[1]);
         }
     }
 </script>

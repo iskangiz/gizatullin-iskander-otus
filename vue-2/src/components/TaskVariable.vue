@@ -1,8 +1,11 @@
 <template>
     <label>
-        <input type="text" v-if="variable.isHidden">
+        <input type="text" v-if="variable.isHidden" v-model="variable.number">
         <label v-if="!variable.isHidden">{{variable.number}}</label>
         <label>{{getOperationString(variable.operation)}}</label>
+    <br />
+        <label>{{variable.number}}</label>
+        <br />
     </label>
 </template>
 
@@ -30,7 +33,10 @@
 
                 return  "";
             }
-        }
+        },
+        data: () => ({
+            focused: true
+        })
     }
 </script>
 
