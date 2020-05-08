@@ -12,12 +12,12 @@
                     :max-value=15
                     measure="Длительность"
                     measure-unit="минут"
-                    :init-value=7
+                    :init-value=getDuration
                     @rangeValueChanged="onInputValueChanged($event,'setDuration')"/>
             <Range  :min-value=1
-                    :max-value=10
+                    :max-value=3
                     measure="Сложность"
-                    :init-value=5
+                    :init-value=getComplexity
                     @rangeValueChanged="onInputValueChanged($event,'setComplexity')"/>
             <Checkbox title="Суммирование"
                       :init-value=getIsSumEnabled

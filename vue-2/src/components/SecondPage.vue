@@ -77,7 +77,7 @@
 <script>
     import Countdown from "./Countdown";
     import Task from "./Task";
-    import {mapMutations} from "vuex";
+    import {mapMutations, mapActions, mapGetters} from "vuex";
     export default {
         name: "SecondPage",
         components: {
@@ -86,6 +86,9 @@
         },
         methods: {
             ...mapMutations(["setVariables","setCurrentVariable","setCurrentVariableValue"]),
+            ...mapActions([
+                'setTask'
+            ]),
             countdownEnded() {
                 //alert('countdownEnded!');
             },
@@ -94,13 +97,20 @@
             }
         },
         created() {
-            let variablesToShow=  [
-                {number: 13, operation: "multiple", isHidden: false},
-                {number: 2, operation: "multiple", isHidden: true},
-                {number: 3240, operation: null, isHidden: true}
-            ];
-            this.$store.commit('setVariables', variablesToShow);
-            this.$store.commit('setCurrentVariable', variablesToShow[1]);
+            let settings = this.getAllSettings;
+            this.setTask(settings);
+            // let variablesToShow=  [
+            //     {number: 13, operation: "multiple", isHidden: false},
+            //     {number: 2, operation: "multiple", isHidden: true},
+            //     {number: 3240, operation: null, isHidden: true}
+            // ];
+            // this.$store.commit('setVariables', variablesToShow);
+            // this.$store.commit('setCurrentVariable', variablesToShow[1]);
+        },
+        computed: {
+            ...mapGetters([
+                'getAllSettings'
+            ])
         }
     }
 </script>

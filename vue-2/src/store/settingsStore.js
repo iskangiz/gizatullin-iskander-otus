@@ -6,7 +6,7 @@ const settingsStore = {
         isDivEnabled: true,
         isExpEnabled: true,
         duration: 7,
-        complexity: 5,
+        complexity: 1,
         isSettingsLoading: false
     },
     getters: {
@@ -33,6 +33,18 @@ const settingsStore = {
         },
         getIsSettingsLoading: state => {
             return state.isSettingsLoading;
+        },
+        getAllSettings: state=> {
+            console.log('hbfghfgh')
+            return {
+                "isSumEnabled": state.isSumEnabled,
+                "isDiffEnabled": state.isDiffEnabled,
+                "isMultEnabled": state.isMultEnabled,
+                "isDivEnabled": state.isDivEnabled,
+                "isExpEnabled": state.isExpEnabled,
+                "duration": state.duration,
+                "complexity": state.complexity
+            }
         }
     },
     mutations: {
