@@ -1,12 +1,12 @@
 const settingsStore = {
     state: {
         isSumEnabled: true,
-        isDiffEnabled: false,
-        isMultEnabled: false,
-        isDivEnabled: true,
-        isExpEnabled: true,
+        isDiffEnabled: true,
+        isMultEnabled: true,
+        isDivEnabled: false,
+        isExpEnabled: false,
         duration: 7,
-        complexity: 1,
+        complexity: 2,
         isSettingsLoading: false
     },
     getters: {
@@ -35,7 +35,6 @@ const settingsStore = {
             return state.isSettingsLoading;
         },
         getAllSettings: state=> {
-            console.log('hbfghfgh')
             return {
                 "isSumEnabled": state.isSumEnabled,
                 "isDiffEnabled": state.isDiffEnabled,
@@ -52,16 +51,16 @@ const settingsStore = {
             store.isSumEnabled = value
         },
         setIsDiffEnabled(store, value) {
-            store.isSumEnabled = value
+            store.isDiffEnabled = value
         },
         setIsMultEnabled(store, value) {
-            store.isSumEnabled = value
+            store.isMultEnabled = value
         },
         async setIsDivEnabled(store, value) {
-            store.isSumEnabled = value
+            store.isDivEnabled = value
         },
         setIsExpEnabled(store, value) {
-            store.isSumEnabled = value
+            store.isExpEnabled = value
         },
         setDuration(store, value) {
             store.duration = value;

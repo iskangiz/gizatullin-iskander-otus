@@ -8,66 +8,115 @@
                     </router-link>
                 </div>
                 <div class="col-sm" style="text-align: right">
-                    <Countdown :initial-countdown-in-seconds="10" @countdownEnded="countdownEnded"></Countdown>
+                    <Countdown :initial-countdown-in-seconds=getDurationInSeconds @countdownEnded="countdownEnded" />
                 </div>
             </div>
         </div>
 
-        <div><Task :variables="variablesToShow" result="84240"></Task></div>
+        <div><Task /></div>
 
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <button type="button" v-on:click="buttonCl" class="btn btn-warning btn-circle btn-xl">1</button>
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(1)"
+                            class="btn btn-warning btn-circle btn-xl">1</button>
                 </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">2</button>
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(2)"
+                            class="btn btn-warning btn-circle btn-xl">2</button>
                 </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">3</button>
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(3)"
+                            class="btn btn-warning btn-circle btn-xl">3</button>
                 </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-secondary btn-circle btn-xl">&lt;</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">5</button>
-                </div>
-                <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">6</button>
-                </div>
-                <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">7</button>
-                </div>
-                <div class="col-sm">
-                    <button type="button" class="btn btn-secondary btn-circle btn-xl">&gt;</button>
+                    <button type="button"
+                            :disabled='!getIsTaskEqualityTask'
+                            @click="equalityButtonClick('<')"
+                            class="btn btn-secondary btn-circle btn-xl">&lt;</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">5</button>
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(4)"
+                            class="btn btn-warning btn-circle btn-xl">4</button>
                 </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">6</button>
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(5)"
+                            class="btn btn-warning btn-circle btn-xl">5</button>
                 </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">7</button>
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(6)"
+                            class="btn btn-warning btn-circle btn-xl">6</button>
                 </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-secondary btn-circle btn-xl">?</button>
+                    <button type="button"
+                            :disabled='!getIsTaskEqualityTask'
+                            @click="equalityButtonClick('>')"
+                            class="btn btn-secondary btn-circle btn-xl">&gt;</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm">
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(7)"
+                            class="btn btn-warning btn-circle btn-xl">7</button>
                 </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-warning btn-circle btn-xl">0</button>
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(8)"
+                            class="btn btn-warning btn-circle btn-xl">8</button>
                 </div>
                 <div class="col-sm">
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(9)"
+                            class="btn btn-warning btn-circle btn-xl">9</button>
                 </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-secondary btn-circle btn-xl">=</button>
+                    <button type="button"
+                            :disabled='!getIsTaskEqualityTask'
+                            @click="equalityButtonClick('=')"
+                            class="btn btn-secondary btn-circle btn-xl">=</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick('-')"
+                            class="btn btn-warning btn-circle btn-xl">-</button>
+                </div>
+                <div class="col-sm">
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="numberButtonClick(0)"
+                            class="btn btn-warning btn-circle btn-xl">0</button>
+                </div>
+                <div class="col-sm">
+                    <button type="button"
+                            :disabled='getIsTaskEqualityTask'
+                            @click="deleteButtonClick"
+                            class="btn btn-warning btn-circle btn-xl">del</button>
+                </div>
+                <div class="col-sm">
+                    <button type="button"
+                            @click="submitButtonClick"
+                            class="btn btn-success btn-circle btn-xl">ok</button>
                 </div>
             </div>
         </div>
@@ -85,32 +134,41 @@
             Task
         },
         methods: {
-            ...mapMutations(["setVariables","setCurrentVariable","setCurrentVariableValue"]),
+            ...mapMutations([
+                "addUserInputNumber",
+                "deleteUserInputNumber",
+                "setUserEqualitySign",
+                "setSettings"]),
             ...mapActions([
-                'setTask'
+                'setTask',
+                'submitTask'
             ]),
             countdownEnded() {
-                //alert('countdownEnded!');
+                this.$router.push({ path: '/'});
             },
-            buttonCl(){
-                this.$store.commit('setCurrentVariableValue',1);
+            numberButtonClick(number) {
+                this.$store.commit('addUserInputNumber', number);
+            },
+            deleteButtonClick(number) {
+                this.$store.commit('deleteUserInputNumber', number);
+            },
+            equalityButtonClick(equalitySign) {
+                this.$store.commit('setUserEqualitySign', equalitySign)
+            },
+            submitButtonClick() {
+                this.submitTask();
             }
         },
         created() {
-            let settings = this.getAllSettings;
-            this.setTask(settings);
-            // let variablesToShow=  [
-            //     {number: 13, operation: "multiple", isHidden: false},
-            //     {number: 2, operation: "multiple", isHidden: true},
-            //     {number: 3240, operation: null, isHidden: true}
-            // ];
-            // this.$store.commit('setVariables', variablesToShow);
-            // this.$store.commit('setCurrentVariable', variablesToShow[1]);
+            this.setTask();
         },
         computed: {
             ...mapGetters([
-                'getAllSettings'
-            ])
+                'getDuration','getIsTaskEqualityTask'
+            ]),
+            getDurationInSeconds: function () {
+                return this.getDuration * 60
+            }
         }
     }
 </script>

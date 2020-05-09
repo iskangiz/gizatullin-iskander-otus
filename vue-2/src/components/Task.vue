@@ -1,7 +1,14 @@
 <template>
     <div>
-        <TaskVariable v-for="variable in getVariables" :key="variable" :variable="variable"></TaskVariable>
-        <p>={{result}}</p>
+        <TaskVariable v-for="(variable, index) in getTaskNumbers" :key="index" :variable="variable"></TaskVariable>
+        <div v-if="getIsTaskEqualityTask">
+            <p><span class="userInput"> {{getUserEqualitySign}}</span></p>
+            <p><span>{{getTaskResultToShow}}</span></p>
+        </div>
+        <div v-else>
+            <p><span>=</span></p>
+            <p><span class="userInput">{{getUserInputValue}}</span></p>
+        </div>
     </div>
 </template>
 
@@ -13,13 +20,13 @@
         components: {
             TaskVariable
         },
-        props: {
-            variables: Array,
-            result: Object
-        },
         computed: {
             ...mapGetters([
-                'getVariables'
+                'getTaskNumbers',
+                'getIsTaskEqualityTask',
+                'getTaskResultToShow',
+                'getUserInputValue',
+                'getUserEqualitySign'
             ])
         }
     }

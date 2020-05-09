@@ -9,11 +9,11 @@ export default class TaskGenerator {
         task.result = this.calculateResult(task.numbers);
         task.isEquality = this.randomBoolean();
 
-        if( task.result % 1 === 0)
+        if (task.result % 1 !== 0)
             task.isEquality = true;
 
         if (task.isEquality) {
-            task.resultToShow = this.randomInteger(-10, 10);
+            task.resultToShow = task.result + this.randomInteger(-10, 10);
         }
 
         return task;
