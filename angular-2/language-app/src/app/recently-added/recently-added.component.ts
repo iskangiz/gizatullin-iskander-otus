@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TranslationService} from "../../services/translation.service";
 
 @Component({
   selector: 'app-recently-added',
@@ -7,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecentlyAddedComponent implements OnInit {
 
-  constructor() { }
+  constructor(private translationService: TranslationService) {
+  }
+
+  testService() {
+    this.translationService.translate("ru", "en", "задача").subscribe(data => {
+      console.log(data["text"])
+    });
+  }
 
   ngOnInit(): void {
   }
