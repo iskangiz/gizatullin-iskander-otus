@@ -7,6 +7,7 @@ import { GoComponent } from './go/go.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -15,11 +16,12 @@ import { HttpClientModule } from "@angular/common/http";
     GoComponent,
     SettingsComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

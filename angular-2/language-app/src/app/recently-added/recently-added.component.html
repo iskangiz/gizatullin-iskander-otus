@@ -1,5 +1,6 @@
 <div>
   <h4>4 Мая 2017</h4>
   <p *ngFor="let word of words">{{word.word}} - {{word.translation?.text}}</p>
+  <textarea class="w-100" [(ngModel)]="wordsTxt"></textarea>
   <button class="btn btn-primary" (click)="testService()">Add New</button>
 </div>

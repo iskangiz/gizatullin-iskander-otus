@@ -34,12 +34,10 @@ export class DictionaryService {
           let wordWithTranslations = new WordWithTranslations(w, 'en', translation);
           this.storageService.addWord(wordWithTranslations);
 
-          console.log('next');
           observer.next(new WordWithTranslation(wordWithTranslations, 'en'));
         });
       });
 
-      console.log('complete');
       //observer.complete();
     });
   }
