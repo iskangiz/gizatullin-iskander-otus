@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TranslationService} from "../../services/translation.service";
 import {StorageService} from "../../services/storage.service";
+import {DictionaryService} from "../../services/dictionary.service";
 import IWordWithTranslation from "../../model/IWordWithTranslation"
 
 @Component({
@@ -10,25 +11,20 @@ import IWordWithTranslation from "../../model/IWordWithTranslation"
 })
 export class RecentlyAddedComponent implements OnInit {
 
-  constructor(private translationService: TranslationService, private  storageService: StorageService) {
+  words:Array<IWordWithTranslation>;
+
+  constructor(private translationService: TranslationService,
+              private storageService: StorageService,
+              private dictionaryService: DictionaryService) {
   }
 
   testService() {
-    console.log('old words');
-    console.log(this.storageService.getWords());
-    let newWord = {} as IWordWithTranslation;
-    newWord.word = 'тест';
-    newWord.translations = [{language: "em", text: "test"}];
-    this.storageService.addWord(newWord);
-    console.log('new words');
-    console.log(this.storageService.getWords());
-
-    this.translationService.translate("ru", "en", "задача").subscribe(data => {
-      console.log(data["text"])
-    });
+    this.dictionaryService.addWordsToDictionary('яблоко банан апельсин').subscribe(value => {
+      this.words.push(value)
+    }, error => {}, () => {console.log('fin')})
   }
 
   ngOnInit(): void {
+    this.words = this.dictionaryService.getWordsFromDictionary('en');
   }
-
 }

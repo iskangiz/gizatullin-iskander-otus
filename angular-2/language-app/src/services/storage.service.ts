@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import IWordWithTranslation from "../model/IWordWithTranslation"
+import IWordWithTranslations from "../model/IWordWithTranslations"
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +11,14 @@ export class StorageService {
   constructor() {
   }
 
-  getWords(): Array<IWordWithTranslation> {
+  getWords(): Array<IWordWithTranslations> {
     let words = JSON.parse(localStorage.getItem(this.wordsKey));
     if(words == null)
       return [];
-    return words as Array<IWordWithTranslation>;
+    return words as Array<IWordWithTranslations>;
   }
 
-  addWord(word: IWordWithTranslation) {
+  addWord(word: IWordWithTranslations) {
     let words = this.getWords();
     if (!words.some(w => w.word == word.word)) {
       words.push(word);
@@ -26,7 +26,7 @@ export class StorageService {
     this.saveWords(words);
   }
 
-  saveWords(words: Array<IWordWithTranslation>) {
+  saveWords(words: Array<IWordWithTranslations>) {
     localStorage.setItem(this.wordsKey, JSON.stringify(words));
   }
 }
