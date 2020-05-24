@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {MatTabsModule} from "@angular/material/tabs";
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {MatTabsModule} from "@angular/material/tabs";
         BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
-        MatTabsModule
+        MatTabsModule,
+        ReactiveFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

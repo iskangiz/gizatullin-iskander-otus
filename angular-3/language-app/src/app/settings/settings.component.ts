@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {TranslationService} from "../../services/translation.service";
+import {Language} from "../../model/Language";
+import {StorageService} from "../../services/storage.service";
+import {Settings} from "../../model/Settings";
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +12,66 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+  settingsForm: FormGroup;
 
-  ngOnInit(): void {
+  get languageControl (): FormControl {
+    return this.settingsForm.get('language') as FormControl;
   }
 
+  get numberOfWordsControl (): FormControl {
+    return this.settingsForm.get('numberOfWords') as FormControl;
+  }
+
+  languages: Array<Language>;
+
+  constructor(private translationService: TranslationService, private storageService: StorageService) {
+    this.settingsForm = new FormGroup({
+      language: new FormControl('', [
+        Validators.required
+      ]),
+      numberOfWords: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^-{0,1}[0-9]{1,}$"),
+        Validators.min(1),
+      ])
+    });
+  }
+
+  ngOnInit(): void {
+    let existingSettings = this.storageService.getSettings();
+    if (existingSettings != null) {
+      this.languageControl.setValue(existingSettings.language);
+      this.numberOfWordsControl.setValue(existingSettings.numberOfWords);
+    }
+
+    this.translationService.getLanguages().subscribe(value => {
+      this.languages = (Object.keys(value).map(x => new Language(value[x], x))).sort(this.compareLanguages);
+    });
+  }
+
+  settingFormSubmit() {
+    if (this.settingsForm.valid) {
+      let newSettings = new Settings(this.languageControl.value, this.numberOfWordsControl.value);
+      this.storageService.saveSettings(newSettings);
+    } else {
+      console.log(this.numberOfWordsControl.errors);
+      Object.keys(this.settingsForm.controls).forEach(key => {
+        this.settingsForm.get(key).markAsDirty();
+      });
+    }
+  }
+
+  compareFn(c1: any, c2:any): boolean {
+    return c1 && c2 ? c1.code === c2.code : c1 === c2;
+  }
+
+  compareLanguages( a, b ) {
+    if ( a.title < b.title ){
+      return -1;
+    }
+    if ( a.title > b.title ){
+      return 1;
+    }
+    return 0;
+  }
 }
