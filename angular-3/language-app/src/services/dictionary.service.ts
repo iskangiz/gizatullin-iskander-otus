@@ -18,10 +18,10 @@ export class DictionaryService {
     let words = this.storageService.getWords();
     return words.map(value => {
       return new WordWithTranslation(value, lang);
-    });
+    }).filter(x => x.translation != null);
   }
 
-  addWordsToDictionary(text: string) {
+  addWordsToDictionary(text: string, lang: string) {
     text.split(' ');
     let wordsArray = text.split(/\s+/);
 
@@ -29,12 +29,12 @@ export class DictionaryService {
       let w = wordsArray[0];
 
       wordsArray.forEach(w => {
-        this.translationService.translate('ru', 'en', w).subscribe(value => {
+        this.translationService.translate('ru', lang, w).subscribe(value => {
           let translation = value["text"].length > 0 ? value["text"][0] : "";
-          let wordWithTranslations = new WordWithTranslations(w, 'en', translation);
+          let wordWithTranslations = new WordWithTranslations(w, lang, translation);
           this.storageService.addWord(wordWithTranslations);
 
-          observer.next(new WordWithTranslation(wordWithTranslations, 'en'));
+          observer.next(new WordWithTranslation(wordWithTranslations, lang));
         });
       });
 
