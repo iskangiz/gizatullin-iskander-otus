@@ -1,0 +1,25 @@
+<header>
+  <h2>Learn English</h2>
+</header>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" (click)="changeTab($event,'addRecentlyTab')">Recently Added</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" (click)="changeTab($event,'goTab')">Go</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" (click)="changeTab($event,'settingsTab')">Settings</a>
+  </li>
+</ul>
+<div id="addRecentlyTab" class="tab">
+  <app-recently-added></app-recently-added>
+</div>
+<div id="goTab" class="tab hide">
+  <app-go></app-go>
+</div>
+<div id="settingsTab" class="tab hide">
+  <app-settings></app-settings>
+</div>
+
