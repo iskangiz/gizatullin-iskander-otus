@@ -14,7 +14,7 @@ export class DictionaryService {
   constructor(private translationService: TranslationService, private  storageService: StorageService) {
   }
 
-  getWordsFromDictionary(lang: string) {
+  getWordsFromDictionary(lang: string) : Array<WordWithTranslation> {
     let words = this.storageService.getWords();
     return words.map(value => {
       return new WordWithTranslation(value, lang);
