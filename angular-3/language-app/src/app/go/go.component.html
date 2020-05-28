@@ -1,0 +1,14 @@
+<div class="container-fluid text-center">
+  <h2>Education</h2>
+  <h3>{{currentWord?.word}}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="checkWord()">
+    <input class="w-100" [formControl]="checkWordControl">
+    <span
+      *ngIf="checkWordControl.dirty && checkWordControl.invalid && checkWordControl.errors.required">
+          Field is required.
+        </span>
+    <button class="btn btn-primary" [disabled]="currentWord == null">Add New</button>
+  </form>
+</div>
+
