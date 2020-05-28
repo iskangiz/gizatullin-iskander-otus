@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let existingSettings = this.storageService.getSettings();
+    const existingSettings = this.storageService.getSettings();
     if (existingSettings != null) {
       this.languageControl.setValue(existingSettings.language);
       this.numberOfWordsControl.setValue(existingSettings.numberOfWords);
@@ -51,10 +51,9 @@ export class SettingsComponent implements OnInit {
 
   settingFormSubmit() {
     if (this.settingsForm.valid) {
-      let newSettings = new Settings(this.languageControl.value, this.numberOfWordsControl.value);
+      const newSettings = new Settings(this.languageControl.value, this.numberOfWordsControl.value);
       this.storageService.saveSettings(newSettings);
     } else {
-      console.log(this.numberOfWordsControl.errors);
       Object.keys(this.settingsForm.controls).forEach(key => {
         this.settingsForm.get(key).markAsDirty();
       });

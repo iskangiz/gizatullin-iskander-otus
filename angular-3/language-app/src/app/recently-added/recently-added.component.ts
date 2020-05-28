@@ -45,8 +45,8 @@ export class RecentlyAddedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let settings = this.storageService.getSettings();
-    this.languageCode = (settings?.language != null) ? settings.language.code : 'en';
+    const settings = this.storageService.getSettings();
+    this.languageCode = (settings?.language !== null) ? settings.language.code : 'en';
 
     this.words = this.dictionaryService.getWordsFromDictionary(this.languageCode);
     this.wordsTxt = '';

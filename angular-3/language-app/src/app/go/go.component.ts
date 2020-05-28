@@ -34,8 +34,8 @@ export class GoComponent implements OnInit {
 
   ngOnInit(): void {
     this.settings = this.storageService.getSettings();
-    if (this.settings != null) {
-      let shuffledWords = this.dictionaryService.getWordsFromDictionary(this.settings.language.code).sort(() => 0.5 - Math.random());
+    if (this.settings !== null) {
+      const shuffledWords = this.dictionaryService.getWordsFromDictionary(this.settings.language.code).sort(() => 0.5 - Math.random());
       this.words = shuffledWords.slice(0, this.settings.numberOfWords);
       this.currentWord = this.words[this.currentIndex];
     }
@@ -43,14 +43,14 @@ export class GoComponent implements OnInit {
 
   checkWord() {
     if (this.form.valid) {
-      let result = this.checkWordControl.value.toString().toLowerCase() === this.currentWord.translation.text.toLowerCase();
+      const result = this.checkWordControl.value.toString().toLowerCase() === this.currentWord.translation.text.toLowerCase();
       alert((result) ? 'Correct' : `Incorrect. Correct answer - ${this.currentWord.translation.text}`);
 
       this.currentIndex++;
       this.checkWordControl.setValue('');
       this.checkWordControl.markAsPristine();
 
-      if (this.currentIndex == this.words.length) {
+      if (this.currentIndex === this.words.length) {
         alert('All words!');
         this.currentWord = null;
         return;
