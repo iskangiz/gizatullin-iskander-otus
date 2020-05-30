@@ -7,7 +7,8 @@ import {Routes,RouterModule} from "@angular/router";
 export const appRoutes: Routes = [
   { path: 'recently-added', component: RecentlyAddedComponent },
   { path: 'go', component: GoComponent },
-  { path: 'settings', component: SettingsComponent }
+  { path: 'settings', component: SettingsComponent },
+  { path: '**', redirectTo: '/recently-added', pathMatch: 'full' },
 ];
 
 @NgModule({
