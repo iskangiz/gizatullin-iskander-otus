@@ -10,6 +10,7 @@ import { HttpClientModule } from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {MatTabsModule} from "@angular/material/tabs";
 import {ReactiveFormsModule} from '@angular/forms';
+import {AppRoutingModule} from "../routing.module";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {ReactiveFormsModule} from '@angular/forms';
         HttpClientModule,
         FormsModule,
         MatTabsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AppRoutingModule
     ],
   providers: [],
   bootstrap: [AppComponent]

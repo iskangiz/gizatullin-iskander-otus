@@ -4,6 +4,7 @@ import {TranslationService} from "../../services/translation.service";
 import {Language} from "../../model/Language";
 import {StorageService} from "../../services/storage.service";
 import {Settings} from "../../model/Settings";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-settings',
@@ -24,7 +25,9 @@ export class SettingsComponent implements OnInit {
 
   languages: Array<Language>;
 
-  constructor(private translationService: TranslationService, private storageService: StorageService) {
+  constructor(private translationService: TranslationService,
+              private storageService: StorageService,
+              private location: Location) {
     this.settingsForm = new FormGroup({
       language: new FormControl('', [
         Validators.required
@@ -58,6 +61,10 @@ export class SettingsComponent implements OnInit {
         this.settingsForm.get(key).markAsDirty();
       });
     }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   compareFn(c1: any, c2:any): boolean {
