@@ -3,9 +3,10 @@ import {RecentlyAddedComponent} from "./app/recently-added/recently-added.compon
 import {GoComponent} from "./app/go/go.component";
 import {SettingsComponent} from "./app/settings/settings.component";
 import {Routes,RouterModule} from "@angular/router";
+import {CanDeactivateGuard} from "./can-deactivate.guard";
 
 export const appRoutes: Routes = [
-  { path: 'recently-added', component: RecentlyAddedComponent },
+  { path: 'recently-added', component: RecentlyAddedComponent, canDeactivate: [CanDeactivateGuard] },
   { path: 'go', component: GoComponent },
   { path: 'settings', component: SettingsComponent },
   { path: '**', redirectTo: '/recently-added', pathMatch: 'full' },
@@ -16,7 +17,7 @@ export const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: false, // <-- debugging purposes only
+        enableTracing: false
       }
     )
   ],

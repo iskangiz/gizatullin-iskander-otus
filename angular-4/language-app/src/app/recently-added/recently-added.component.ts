@@ -23,6 +23,11 @@ export class RecentlyAddedComponent implements OnInit {
     return this.form.get('newWords') as FormControl;
   }
 
+  canDeactivate (): Boolean {
+    const hasValue = this.form.value['newWords'] != '';
+    return hasValue ? confirm('Are you sure? Value in textarea will be lost') : true;
+  }
+
   constructor(private translationService: TranslationService,
               private storageService: StorageService,
               private dictionaryService: DictionaryService) {
