@@ -1,0 +1,50 @@
+<div class="container-fluid text-center">
+  <form [formGroup]="settingsForm" (ngSubmit)="settingFormSubmit()">
+    <div class="row">
+      <div class="col-md-4">
+        Language
+      </div>
+      <div class="col-md-8">
+        <select class="form-control" formControlName="language" [compareWith]="compareFn">
+          <option *ngFor="let l of languages" [ngValue]="l">
+            {{ l.title }}
+          </option>
+        </select>
+        <span
+          *ngIf="languageControl.dirty && languageControl.invalid && languageControl.errors.required">
+          Language is required.
+        </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        Nb. of words:
+      </div>
+      <div class="col-md-8">
+        <input class="form-control" name="numberOfWords" formControlName="numberOfWords">
+        <span
+          *ngIf="numberOfWordsControl.dirty && numberOfWordsControl.invalid && numberOfWordsControl.errors.required">
+          Nb. of words is required.
+        </span>
+        <span
+          *ngIf="numberOfWordsControl.dirty && numberOfWordsControl.invalid && numberOfWordsControl.errors.pattern">
+          Only numbers allowed
+        </span>
+        <span
+          *ngIf="numberOfWordsControl.dirty && numberOfWordsControl.invalid && numberOfWordsControl.errors.min">
+          1 minimum
+        </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6" (click)="goBack()">
+        <button class="btn btn-primary w-50">Back</button>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-primary w-50">Save</button>
+      </div>
+    </div>
+  </form>
+</div>
