@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "version": "0.0.0",
+  "dependencies": {},
+
+  "devDependencies": {},
+  "scripts": {
+	"tree": "node tree.js '/ssd'",
+    "test": "echo(args)"
+  }
+}
