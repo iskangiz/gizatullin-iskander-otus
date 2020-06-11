@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vocabulary from '../views/Vocabulary.vue'
 
 Vue.use(VueRouter)
 
@@ -8,7 +8,12 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Vocabulary
+  },
+  {
+    path: '/Vocabulary',
+    name: 'Vocabulary',
+    component: Vocabulary
   },
   {
     path: '/about',

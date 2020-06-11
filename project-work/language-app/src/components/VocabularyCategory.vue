@@ -20,8 +20,9 @@
 </template>
 
 <script>
+
     export default {
-        name: "Vocabulary",
+        name: "VocabularyCategory",
         data: () => ({
             words: [
                 {id: 1, title: "Home", url: "/"},
