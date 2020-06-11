@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const accountStore = {
     state: {
-        status: '',
+        isLoggedIn: false,
         token: localStorage.getItem('token') || '',
         user : {}
     },
@@ -12,19 +12,16 @@ const accountStore = {
         }
     },
     mutations: {
-        auth_request(state){
-            state.status = 'loading'
-        },
         auth_success(state, token, user){
-            state.status = 'success'
-            state.token = token
+            state.isLoggedIn = true;
+            state.token = token;
             state.user = user
         },
         auth_error(state){
-            state.status = 'error'
+            state.isLoggedIn = false
         },
         logout(state){
-            state.status = ''
+            state.isLoggedIn = false;
             state.token = ''
         },
     },
@@ -33,7 +30,7 @@ const accountStore = {
             return new Promise((resolve, reject) => {
                 commit('auth_request');
                 axios({
-                    url: 'http://localhost:5000/token',
+                    url: `${process.env.VUE_APP_NOT_SECRET_CODE}/token`,
                     params: {username: user.login, password: user.password},
                     method: 'POST'
                 })
