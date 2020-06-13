@@ -12,6 +12,15 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
+axios.interceptors.response.use(undefined, function (err) {
+  return new Promise(function () {
+    if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
+      store.dispatch("logout");
+    }
+    throw err;
+  });
+})
+
 new Vue({
   router,
   store,
