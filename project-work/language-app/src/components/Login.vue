@@ -42,7 +42,6 @@
 </template>
 
 <script>
-
     import {mapMutations, mapActions} from "vuex";
     export default {
         name: "Login",
@@ -56,13 +55,13 @@
                 "setUserEqualitySign",
                 "setSettings"]),
             ...mapActions([
-                'loginRequest',
-                'submitTask'
+                'loginRequest'
             ]),
             loginBtn() {
                 if (this.$refs.form.validate()) {
                     this.loginRequest({"login": this.$data.login, "password": this.$data.password}).then(() => {
                         this.$data.loginFailure = false;
+                        this.$refs.form.reset();
                         this.show = false;
                     }).catch((er) => {
                         console.log(er);

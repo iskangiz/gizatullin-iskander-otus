@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    <input type="file" accept="audio/*" capture>
+    <v-btn @click="testAudio"></v-btn>
     <v-row class="text-center">
       <v-col cols="12">
         <v-img
@@ -147,5 +149,15 @@
         },
       ],
     }),
+    methods:{
+      async testAudio(){
+        alert(window.isSecureContext);
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true
+        })
+        console.log(stream);
+      }
+
+    }
   }
 </script>

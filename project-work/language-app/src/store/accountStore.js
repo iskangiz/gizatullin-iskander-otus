@@ -7,8 +7,8 @@ const accountStore = {
         user : {}
     },
     getters: {
-        getIsTaskEqualityTask(store) {
-            return store.task.isEquality;
+        isLoggedIn(store) {
+            return store.isLoggedIn;
         }
     },
     mutations: {
@@ -28,28 +28,33 @@ const accountStore = {
     actions: {
         loginRequest({commit}, user) {
             return new Promise((resolve, reject) => {
-                commit('auth_request');
                 axios({
                     url: `${process.env.VUE_APP_NOT_SECRET_CODE}/token`,
                     params: {username: user.login, password: user.password},
                     method: 'POST'
                 })
                     .then(resp => {
-                        const token = resp.data.access_token
-                        const user = resp.data.username
-                        localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = token
-                        commit('auth_success', token, user)
+                        const token = resp.data.access_token;
+                        const user = resp.data.username;
+                        localStorage.setItem('token', token);
+                        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                        commit('auth_success', token, user);
                         resolve(resp)
                     })
                     .catch(err => {
-                        commit('auth_error')
-                        localStorage.removeItem('token')
+                        commit('auth_error');
+                        localStorage.removeItem('token');
                         reject(err)
                     })
             })
+        },
+        logout({commit}) {
+            commit('logout');
+            localStorage.removeItem('token');
+            delete axios.defaults.headers.common['Authorization'];
         }
     }
+
 };
 
 export default accountStore;

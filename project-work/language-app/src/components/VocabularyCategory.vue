@@ -21,6 +21,8 @@
 
 <script>
 
+    import {mapActions} from "vuex";
+
     export default {
         name: "VocabularyCategory",
         data: () => ({
@@ -30,9 +32,13 @@
             ]
         }),
         methods: {
+            ...mapActions([
+                'testRequest'
+            ]),
             playAudio() {
+                this.testRequest();
                 alert('щас спою');
-                new Audio('https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3').play();
+                //new Audio('https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3').play();
             }
         }
     }

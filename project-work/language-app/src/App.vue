@@ -26,12 +26,16 @@
 
       <template v-slot:extension>
         <v-tabs fixed-tabs>
-          <v-tab v-for="tab in tabs" :key="tab.id" :to="tab.url">{{tab.title}}</v-tab>
+          <v-tab v-for="tab in allTabs" :key="tab.id" :to="tab.url">{{tab.title}}</v-tab>
         </v-tabs>
       </template>
       <login v-model="showLogin"></login>
-      <v-btn text @click.stop="showLogin = true">Login</v-btn>
-      <v-btn text>Logout</v-btn>
+      <template v-if="!getIsLoggedIn">
+        <v-btn text @click.stop="showLogin = true">Login</v-btn>
+      </template>
+      <template v-else>
+        <v-btn text @click="logoutBtn()">Logout</v-btn>
+      </template>
     </v-app-bar>
 
     <v-content >
@@ -45,6 +49,7 @@
 
 <script>
 import Login from  "./components/Login"
+import {mapActions, mapGetters} from "vuex";
 export default {
   name: 'App',
 
@@ -58,6 +63,28 @@ export default {
       {id: 2, title: "Settings", url: "/Settings"}
     ],
     showLogin: false
-  })
+  }),
+
+  computed: {
+    ...mapGetters([
+      'getIsLoggedIn'
+    ]),
+    allTabs: function () {
+      // `this` указывает на экземпляр vm
+      if (this.getIsLoggedIn) {
+        let securedTabs = [{id: 3, title: "Vocabulary", url: "/Vocabulary"}];
+        return this.$data.tabs.concat(securedTabs);
+      } else
+        return this.$data.tabs;
+    }
+  },
+  methods: {
+    ...mapActions([
+      'logout'
+    ]),
+    logoutBtn() {
+      this.logout();
+    }
+  }
 };
 </script>

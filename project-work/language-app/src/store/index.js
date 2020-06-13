@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import accountStore from "./accountStore";
+import wordStore from "./wordStore";
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    accountStore
+    accountStore,
+    wordStore
   }
 })

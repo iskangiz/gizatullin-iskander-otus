@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vocabulary from '../views/Vocabulary.vue'
+import Home from '../views/Home.vue'
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -8,12 +10,15 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Vocabulary
+    component: Home
   },
   {
     path: '/Vocabulary',
     name: 'Vocabulary',
-    component: Vocabulary
+    component: Vocabulary,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/about',
@@ -29,4 +34,17 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.getIsLoggedIn) {
+      next()
+      return
+    }
+    next('/home')
+  } else {
+    next()
+  }
+})
+
 export default router
+
