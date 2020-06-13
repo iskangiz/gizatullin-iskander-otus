@@ -84,6 +84,7 @@ export default {
     ]),
     logoutBtn() {
       this.logout();
+      this.$router.push('/home')
     }
   }
 };

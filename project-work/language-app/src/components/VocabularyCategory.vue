@@ -21,7 +21,7 @@
 
 <script>
 
-    import {mapActions} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "VocabularyCategory",
@@ -37,9 +37,16 @@
             ]),
             playAudio() {
                 this.testRequest();
+                alert(this.getIsAdmin)
                 alert('щас спою');
                 //new Audio('https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3').play();
             }
+        },
+
+        computed: {
+            ...mapGetters([
+                'getIsAdmin'
+            ])
         }
     }
 </script>

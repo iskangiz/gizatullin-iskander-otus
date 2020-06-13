@@ -12,6 +12,19 @@ const accountStore = {
                 return true;
             } else
                 return store.isLoggedIn;
+        },
+        getRole(store) {
+            if(store.token !== '') {
+                const payload = JSON.parse(atob(store.token.split('.')[1]));
+                return payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+            } else
+                return null;
+        },
+        getIsAdmin(state, getters) {
+            return getters.getRole === 'admin';
+        },
+        getIsUser(state, getters) {
+            return getters.getRole === 'user';
         }
     },
     mutations: {
