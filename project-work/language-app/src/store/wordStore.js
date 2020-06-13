@@ -7,9 +7,6 @@ const wordStore = {
         user : {}
     },
     getters: {
-        getIsLoggedIn(store) {
-            return store.isLoggedIn;
-        }
     },
     mutations: {
         auth_success(state, token, user){

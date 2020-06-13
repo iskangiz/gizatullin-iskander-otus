@@ -7,8 +7,11 @@ const accountStore = {
         user : {}
     },
     getters: {
-        isLoggedIn(store) {
-            return store.isLoggedIn;
+        getIsLoggedIn(store) {
+            if (store.token !== '') {
+                return true;
+            } else
+                return store.isLoggedIn;
         }
     },
     mutations: {
