@@ -1,31 +1,30 @@
 <template>
-    <v-dialog max-width="500px" v-model="show" persistent>
+    <v-card>
         <v-form ref="form">
             <v-card>
                 <v-alert v-model="loginFailure" type="error">Error while logging</v-alert>
                 <v-card-title>
-                    <span class="headline">Login</span>
+                    <span class="headline">Add word</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
                         <v-row>
                             <v-col>
-                                <v-text-field label="Login*"
+                                <v-text-field label="Word*"
                                               required
-                                              :rules="[v => !!v || 'Login is required']"
-                                              v-model="login"></v-text-field>
+                                              :rules="[v => !!v || 'Word is required']"
+                                              v-model="word" />
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col>
-                                <v-text-field label="Password"
-                                              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                              hint="example of helper text only on focus"
-                                              :type="showPassword ? 'text' : 'password'"
-                                              :rules="[v => !!v || 'Password is required']"
-                                              @click:append="showPassword = !showPassword"
-                                              v-model="password">
-                                </v-text-field>
+                                <v-file-input
+                                        v-model="image"
+                                        :rules="rules"
+                                        accept="image/png, image/jpeg, image/bmp"
+                                        placeholder="Pick an image"
+                                        prepend-icon="mdi-camera"
+                                        label="Image" />
                             </v-col>
                         </v-row>
                     </v-container>
@@ -34,20 +33,21 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
-                    <v-btn color="blue darken-1" text @click="loginBtn">Login</v-btn>
+                    <v-btn color="blue darken-1" text @click="loginBtn">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-form>
-    </v-dialog>
+    </v-card>
 </template>
 
 <script>
-    import {mapMutations, mapActions} from "vuex";
+    import {mapActions, mapMutations} from "vuex";
+
     export default {
-        name: "Login",
+        name: "AddWord",
         props: {
-            value: Boolean
-        },
+            categoryId: Number
+        } ,
         methods: {
             ...mapMutations([]),
             ...mapActions([
@@ -66,6 +66,7 @@
                 }
             },
             closeDialog() {
+                console.log(this.$data.image)
                 this.$refs.form.reset();
                 this.show = false;
                 this.$data.loginFailure= false;
@@ -74,8 +75,11 @@
         data: () => ({
             login: "",
             password: "",
-            showPassword: false,
-            loginFailure: false
+            loginFailure: false,
+            image:null,
+            rules: [
+                value => !value || value.size < 2000000 || 'Image size should be less than 2 MB!',
+            ],
         }),
         computed: {
             show: {
