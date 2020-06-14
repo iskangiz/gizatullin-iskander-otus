@@ -13,7 +13,7 @@
                                 <v-text-field label="Login*"
                                               required
                                               :rules="[v => !!v || 'Login is required']"
-                                              v-model="login"></v-text-field>
+                                              v-model="login" />
                             </v-col>
                         </v-row>
                         <v-row>
