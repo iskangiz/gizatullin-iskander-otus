@@ -72,7 +72,10 @@ export default {
     allTabs: function () {
       // `this` указывает на экземпляр vm
       if (this.getIsLoggedIn) {
-        let securedTabs = [{id: 3, title: "Vocabulary", url: "/Vocabulary"}];
+        let securedTabs = [
+          {id: 3, title: "Vocabulary", url: "/Vocabulary"},
+          {id: 4, title: "Training", url: "/VocabularyTraining"}
+        ];
         return this.$data.tabs.concat(securedTabs);
       } else
         return this.$data.tabs;

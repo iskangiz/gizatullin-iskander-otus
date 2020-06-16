@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vocabulary from '../views/Vocabulary.vue'
+import VocabularyTraining from "../views/VocabularyTraining";
 import Home from '../views/Home.vue'
 import store from '../store/index'
 
@@ -16,6 +17,14 @@ Vue.use(VueRouter)
     path: '/Vocabulary',
     name: 'Vocabulary',
     component: Vocabulary,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/VocabularyTraining',
+    name: 'VocabularyTraining',
+    component: VocabularyTraining,
     meta: {
       requiresAuth: true
     }

@@ -75,6 +75,36 @@ const wordStore = {
                         throw err;
                     })
             })
+        },
+        getRandomWords(event, randomWordsParams) {
+            return new Promise((resolve) => {
+                axios({
+                    url: `${process.env.VUE_APP_NOT_SECRET_CODE}/Word/GetRandomWords`,
+                    params: {categoryId: randomWordsParams.categoryId, maxWords: randomWordsParams.maxWords},
+                    method: 'GET'
+                })
+                    .then(resp => {
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            })
+        },
+        checkWordTranslation(event, parameters) {
+            return new Promise((resolve) => {
+                axios({
+                    url: `${process.env.VUE_APP_NOT_SECRET_CODE}/Word/CheckWordTranslation`,
+                    params: {wordId: parameters.wordId, translation: parameters.translation},
+                    method: 'POST'
+                })
+                    .then(resp => {
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            })
         }
     }
 

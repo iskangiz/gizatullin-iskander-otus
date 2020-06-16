@@ -1,11 +1,11 @@
 <template>
-    <v-row >
+    <v-row style="border-bottom: #0b2e13 1px solid">
         <v-col col="2">
             <h3>{{category.title}}</h3>
             <v-btn v-if="getIsAdmin" @click="$emit('wordAdding', category.id)">Add word</v-btn>
         </v-col>
         <v-col cols="10">
-            <v-row v-for="word in category.words" :key="word.id">
+            <v-row style="border-bottom: #0b2e13 1px solid" v-for="word in category.words" :key="word.id">
                 <v-col>
                     {{word.title}}
                 </v-col>

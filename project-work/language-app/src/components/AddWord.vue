@@ -50,7 +50,7 @@
         props: {
             categoryId: Number,
             value: Boolean
-        } ,
+        },
         methods: {
             ...mapMutations([]),
             ...mapActions([
