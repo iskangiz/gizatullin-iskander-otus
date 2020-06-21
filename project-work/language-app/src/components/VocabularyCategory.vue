@@ -1,8 +1,14 @@
 <template>
-    <v-row style="border-bottom: #0b2e13 1px solid">
+    <v-row>
         <v-col col="2">
-            <h3>{{category.title}}</h3>
+<!--            <h3>{{category.title}}</h3>-->
+            <span>{{category.title}}</span>
+            <v-btn v-if="getIsAdmin" icon @click="$emit('categoryDeleted', category.id)">
+                <v-icon>mdi-delete</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
             <v-btn v-if="getIsAdmin" @click="$emit('wordAdding', category.id)">Add word</v-btn>
+            <v-btn @click="goToTraining(category.id)">Train</v-btn>
         </v-col>
         <v-col cols="10">
             <v-row style="border-bottom: #0b2e13 1px solid" v-for="word in category.words" :key="word.id">
@@ -57,6 +63,9 @@
                 this.deleteWord(wordId).then(() => {
                     this.$emit('wordDeleted', this.category.id);
                 })
+            },
+            goToTraining(categoryId) {
+                this.$router.push({ path: 'VocabularyTraining', query: { categoryId: categoryId } })
             }
         },
 

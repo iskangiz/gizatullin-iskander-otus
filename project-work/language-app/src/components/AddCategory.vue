@@ -5,27 +5,16 @@
                 <v-card>
                     <v-alert v-model="saveFailure" type="error">Error while saving</v-alert>
                     <v-card-title>
-                        <span class="headline">Add word</span>
+                        <span class="headline">Add category</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
                             <v-row>
                                 <v-col>
-                                    <v-text-field label="Word*"
+                                    <v-text-field label="Category*"
                                                   required
-                                                  :rules="[v => !!v || 'Word is required']"
-                                                  v-model="word" />
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col>
-                                    <v-file-input
-                                            v-model="image"
-                                            :rules="rules"
-                                            accept="image/png, image/jpeg, image/bmp"
-                                            placeholder="Pick an image"
-                                            prepend-icon="mdi-camera"
-                                            label="Image" />
+                                                  :rules="[v => !!v || 'Category is required']"
+                                                  v-model="category" />
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -46,7 +35,7 @@
     import {mapActions, mapMutations} from "vuex";
 
     export default {
-        name: "AddWord",
+        name: "AddCategory",
         props: {
             categoryId: Number,
             value: Boolean
@@ -54,15 +43,15 @@
         methods: {
             ...mapMutations([]),
             ...mapActions([
-                'addWord'
+                'addCategory'
             ]),
             saveBtn() {
                 if (this.$refs.form.validate()) {
-                    this.addWord({"word": this.$data.word, "categoryId": this.categoryId, "image": this.$data.image}).then(() => {
+                    this.addCategory(this.$data.category).then((x) => {
                         this.$data.saveFailure = false;
                         this.$refs.form.reset();
                         this.show = false;
-                        this.$emit('wordAdded', this.categoryId);
+                        this.$emit('categoryAdded', x.data);
                     }).catch((er) => {
                         console.log(er);
                         this.$data.saveFailure = true
@@ -76,13 +65,8 @@
             }
         },
         data: () => ({
-            word: "",
+            category: "",
             saveFailure: false,
-            image:null,
-            rules: [
-                value => !value || value.size < 2000000 || 'Image size should be less than 2 MB!',
-                v => !!v || 'Image is required'
-            ],
         }),
         computed: {
             show: {

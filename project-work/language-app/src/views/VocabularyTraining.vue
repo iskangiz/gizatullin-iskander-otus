@@ -2,13 +2,15 @@
     <v-card
             class="mx-auto"
             max-width="1000">
-        <v-alert type="success" v-model="successAlert" transition="fade-transition">
-            Correct
-        </v-alert>
+        <div class="alertdiv">
+            <v-alert type="success" dense v-model="successAlert" transition="fade-transition">
+                Correct
+            </v-alert>
 
-        <v-alert type="error" v-model="errorAlert">
-            Wrong answer
-        </v-alert>
+            <v-alert type="error" v-model="errorAlert">
+                Wrong answer
+            </v-alert>
+        </div>
         <TextToTextTraining v-if="currentWord && currentWord.type==='TextToText'" :word="currentWord" @processed="processedHandler"/>
         <ImageToTextTraining v-if="currentWord && currentWord.type==='ImageToText'" :word="currentWord" :words="words" @processed="processedHandler"/>
         <AudioToTextTraining v-if="currentWord && currentWord.type==='AudioToText'" :word="currentWord" @processed="processedHandler"/>
@@ -35,7 +37,7 @@
                 'getRandomWords'
             ]),
             async init() {
-                this.$data.words = (await this.getRandomWords({'categoryId': 1, 'maxWords': 10})).data;
+                this.$data.words = (await this.getRandomWords({'categoryId': this.$route.query.categoryId, 'maxWords': 10})).data;
             },
             setCurrentIndex() {
                 if(this.$data.currentIndex === this.$data.words.length - 1) {
@@ -79,5 +81,7 @@
 </script>
 
 <style scoped>
-
+    .alertdiv {
+        height: 40px;
+    }
 </style>

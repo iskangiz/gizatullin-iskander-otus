@@ -1,9 +1,8 @@
 <template>
     <v-container align="center">
         <v-row>
-            {{word.title}}
             <v-col align="center">
-                <v-img  max-width="450" max-height="450" :src="getImgUrl(word.id)"></v-img>
+                <v-img  max-width="450" height="250" :src="getImgUrl(word.id)"></v-img>
             </v-col>
         </v-row>
         <v-row>
@@ -33,19 +32,10 @@
         name: "ImageToTextTraining",
         props: {
             word: Object,
-            words: []
+            words: Array
         },
         created() {
-            let otherWords = this.words.filter(x => x.id !== this.word.id);
-            let optionArr= [this.word.title];
-            optionArr.push(this.getRandomElement(otherWords).title);
-            optionArr.push(this.getRandomElement(otherWords).title);
-            optionArr.push(this.getRandomElement(otherWords).title);
-            optionArr.sort(() => Math.random() - 0.5);
-            this.firstOption = optionArr[0];
-            this.secondOption = optionArr[1];
-            this.thirdOption = optionArr[2];
-            this.fourthOption = optionArr[3];
+            this.setOptions()
         },
         data: () => ({
             translation: '',
@@ -68,11 +58,30 @@
                 return result;
             },
             checkClick(valueToCheck) {
-                alert(valueToCheck);
                 this.checkWordTranslation({
                     "wordId": this.word.id,
                     "translation": valueToCheck
                 }).then((x) => this.$emit('processed', x.data));
+            },
+            setOptions() {
+                let otherWords = this.words.filter(x => x.id !== this.word.id);
+                let optionArr= [this.word.translation];
+                console.log(optionArr)
+                optionArr.push(this.getRandomElement(otherWords).translation);
+                optionArr.push(this.getRandomElement(otherWords).translation);
+                optionArr.push(this.getRandomElement(otherWords).translation);
+                console.log(optionArr)
+                optionArr.sort(() => Math.random() - 0.5);
+                console.log(optionArr)
+                this.firstOption = optionArr[0];
+                this.secondOption = optionArr[1];
+                this.thirdOption = optionArr[2];
+                this.fourthOption = optionArr[3];
+            }
+        },
+        watch: {
+            word: function() { // watch it
+                this.setOptions();
             }
         }
     }
