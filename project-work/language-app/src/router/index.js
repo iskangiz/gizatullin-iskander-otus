@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Vocabulary from '../views/Vocabulary.vue'
 import VocabularyTraining from "../views/VocabularyTraining";
 import Home from '../views/Home.vue'
+import Exercises from "../views/Exercises";
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -25,6 +26,14 @@ Vue.use(VueRouter)
     path: '/VocabularyTraining',
     name: 'VocabularyTraining',
     component: VocabularyTraining,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/Exercises',
+    name: 'Exercises',
+    component: Exercises,
     meta: {
       requiresAuth: true
     }

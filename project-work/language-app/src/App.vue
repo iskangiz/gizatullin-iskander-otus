@@ -59,8 +59,7 @@ export default {
 
   data: () => ({
     tabs: [
-      {id: 1, title: "Home", url: "/"},
-      {id: 2, title: "Settings", url: "/Settings"}
+      {id: 1, title: "Home", url: "/"}
     ],
     showLogin: false
   }),
@@ -74,7 +73,8 @@ export default {
       if (this.getIsLoggedIn) {
         let securedTabs = [
           {id: 3, title: "Vocabulary", url: "/Vocabulary"},
-          {id: 4, title: "Training", url: "/VocabularyTraining"}
+          {id: 4, title: "Training", url: "/VocabularyTraining"},
+          {id: 5, title: "Exercises", url: "/Exercises"}
         ];
         return this.$data.tabs.concat(securedTabs);
       } else

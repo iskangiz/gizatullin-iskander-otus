@@ -44,10 +44,6 @@
             category: Object
         },
         data: () => ({
-            words: [
-                {id: 1, title: "Home", url: "/"},
-                {id: 2, title: "Settings", url: "/Settings"}
-            ]
         }),
         methods: {
             ...mapActions([
