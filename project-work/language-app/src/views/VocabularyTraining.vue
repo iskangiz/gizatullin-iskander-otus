@@ -49,7 +49,7 @@
             processedHandler(event) {
                 if (event)
                     this.showSuccessAlert();
-                else
+                else if (event === false)
                     this.showErrorAlert();
                 this.setCurrentIndex();
             },

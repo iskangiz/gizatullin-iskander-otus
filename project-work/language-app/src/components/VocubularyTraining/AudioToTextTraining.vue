@@ -29,7 +29,10 @@
                 this.checkWordTranslation({
                     "wordId": this.word.id,
                     "translation": this.translation
-                }).then((x) => this.$emit('processed', x.data));
+                }).then((x) => {
+                    this.translation = null;
+                    this.$emit('processed', x.data)
+                });
             },
             playAudio() {
                 new Audio(`${process.env.VUE_APP_NOT_SECRET_CODE}/Word/getVoice?id=${this.word.id}`).play();
