@@ -3,7 +3,7 @@
         <v-col col="2">
 <!--            <h3>{{category.title}}</h3>-->
             <span>{{category.title}}</span>
-            <v-btn v-if="getIsAdmin" icon @click="$emit('categoryDeleted', category.id)">
+            <v-btn v-if="getIsAdmin" icon @click="deleteCategoryClick">
                 <v-icon>mdi-delete</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
@@ -60,12 +60,19 @@
                 return `${process.env.VUE_APP_NOT_SECRET_CODE}/Word/getImage?id=${wordId}`
             },
             deleteWordClick(wordId) {
-                this.deleteWord(wordId).then(() => {
-                    this.$emit('wordDeleted', this.category.id);
-                })
+                if (confirm('Are you sure?')) {
+                    this.deleteWord(wordId).then(() => {
+                        this.$emit('wordDeleted', this.category.id);
+                    })
+                }
             },
             goToTraining(categoryId) {
                 this.$router.push({ path: 'VocabularyTraining', query: { categoryId: categoryId } })
+            },
+            deleteCategoryClick() {
+                if (confirm('Are you sure?')) {
+                    this.$emit('categoryDeleted', this.category.id)
+                }
             }
         },
 
