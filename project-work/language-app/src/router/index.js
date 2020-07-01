@@ -4,6 +4,8 @@ import Vocabulary from '../views/Vocabulary.vue'
 import VocabularyTraining from "../views/VocabularyTraining";
 import Home from '../views/Home.vue'
 import Exercises from "../views/Exercises";
+import ExerciseTraining from "../views/ExerciseTrainingView";
+import ExerciseAssistance from "../views/ExerciseAssistance";
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -39,6 +41,23 @@ Vue.use(VueRouter)
     }
   },
   {
+    path: '/ExerciseTraining',
+    name: 'ExerciseTraining',
+    component: ExerciseTraining,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/ExerciseAssistance',
+    name: 'ExerciseAssistance',
+    component: ExerciseAssistance,
+    meta: {
+      requiresAuth: true,
+      requiresIsAdmin: true
+    }
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -53,16 +72,31 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.getIsLoggedIn) {
-      next()
-      return
-    }
-    next('/home')
+  let resultIsLoggedIn = checkIsLoggedIn(to);
+  let resultIsAdmin = checkIsAdmin(to);
+  if( resultIsLoggedIn && resultIsAdmin) {
+    next();
+    return;
   } else {
-    next()
+    next('/home')
   }
-})
+});
+
+function checkIsLoggedIn(route) {
+  if(route.matched.some(record => record.meta.requiresAuth)) {
+    return store.getters.getIsLoggedIn;
+  } else {
+    return true;
+  }
+}
+
+function checkIsAdmin(route) {
+  if(route.matched.some(record => record.meta.requiresIsAdmin)) {
+    return store.getters.getIsAdmin;
+  } else {
+    return true;
+  }
+}
 
 export default router
 

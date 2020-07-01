@@ -25,6 +25,9 @@ const accountStore = {
         },
         getIsUser(state, getters) {
             return getters.getRole === 'user';
+        },
+        getToken(state) {
+            return state.token;
         }
     },
     mutations: {

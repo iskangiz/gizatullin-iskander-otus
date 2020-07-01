@@ -48,8 +48,8 @@
                     })
                 }
             },
-            goToTraining(categoryId) {
-                this.$router.push({ path: 'VocabularyTraining', query: { categoryId: categoryId } })
+            goToTraining(blockId) {
+                this.$router.push({ path: 'ExerciseTraining', query: { blockId: blockId } })
             },
             deleteExerciseBlockClick() {
                 if (confirm('Are you sure?')) {

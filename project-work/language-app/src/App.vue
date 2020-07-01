@@ -26,7 +26,7 @@
 
       <template v-slot:extension>
         <v-tabs fixed-tabs>
-          <v-tab v-for="tab in allTabs" :key="tab.id" :to="tab.url">{{tab.title}}</v-tab>
+          <v-tab v-for="(tab, index) in allTabs" :key="index" :to="tab.url">{{tab.title}}</v-tab>
         </v-tabs>
       </template>
       <login v-model="showLogin"></login>
@@ -43,7 +43,6 @@
         <router-view></router-view>
       </v-container>
     </v-content>
-
   </v-app>
 </template>
 
@@ -59,23 +58,27 @@ export default {
 
   data: () => ({
     tabs: [
-      {id: 1, title: "Home", url: "/"}
+      {title: "Home", url: "/"}
     ],
     showLogin: false
   }),
 
   computed: {
     ...mapGetters([
-      'getIsLoggedIn'
+      'getIsLoggedIn',
+      'getIsAdmin'
     ]),
     allTabs: function () {
       // `this` указывает на экземпляр vm
       if (this.getIsLoggedIn) {
         let securedTabs = [
-          {id: 3, title: "Vocabulary", url: "/Vocabulary"},
-          {id: 4, title: "Training", url: "/VocabularyTraining"},
-          {id: 5, title: "Exercises", url: "/Exercises"}
+          {title: "Vocabulary", url: "/Vocabulary"},
+          {title: "Training", url: "/VocabularyTraining"},
+          {title: "Exercises", url: "/Exercises"}
         ];
+        if (this.getIsAdmin) {
+          securedTabs.push({title: "Exercise Assistance", url: "/ExerciseAssistance"});
+        }
         return this.$data.tabs.concat(securedTabs);
       } else
         return this.$data.tabs;
