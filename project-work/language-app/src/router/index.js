@@ -1,0 +1,102 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Vocabulary from '../views/Vocabulary.vue'
+import VocabularyTraining from "../views/VocabularyTraining";
+import Home from '../views/Home.vue'
+import Exercises from "../views/Exercises";
+import ExerciseTraining from "../views/ExerciseTrainingView";
+import ExerciseAssistance from "../views/ExerciseAssistance";
+import store from '../store/index'
+
+Vue.use(VueRouter)
+
+  const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/Vocabulary',
+    name: 'Vocabulary',
+    component: Vocabulary,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/VocabularyTraining',
+    name: 'VocabularyTraining',
+    component: VocabularyTraining,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/Exercises',
+    name: 'Exercises',
+    component: Exercises,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/ExerciseTraining',
+    name: 'ExerciseTraining',
+    component: ExerciseTraining,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/ExerciseAssistance',
+    name: 'ExerciseAssistance',
+    component: ExerciseAssistance,
+    meta: {
+      requiresAuth: true,
+      requiresIsAdmin: true
+    }
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  }
+]
+
+const router = new VueRouter({
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  let resultIsLoggedIn = checkIsLoggedIn(to);
+  let resultIsAdmin = checkIsAdmin(to);
+  if( resultIsLoggedIn && resultIsAdmin) {
+    next();
+    return;
+  } else {
+    next('/home')
+  }
+});
+
+function checkIsLoggedIn(route) {
+  if(route.matched.some(record => record.meta.requiresAuth)) {
+    return store.getters.getIsLoggedIn;
+  } else {
+    return true;
+  }
+}
+
+function checkIsAdmin(route) {
+  if(route.matched.some(record => record.meta.requiresIsAdmin)) {
+    return store.getters.getIsAdmin;
+  } else {
+    return true;
+  }
+}
+
+export default router
+
