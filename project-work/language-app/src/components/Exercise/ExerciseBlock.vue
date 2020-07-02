@@ -34,7 +34,6 @@
         data: () => ({
         }),
         created() {
-            console.log(this.exerciseBlock)
         },
         methods: {
             ...mapActions([

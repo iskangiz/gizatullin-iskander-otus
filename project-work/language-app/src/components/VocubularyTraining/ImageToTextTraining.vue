@@ -66,13 +66,10 @@
             setOptions() {
                 let otherWords = this.words.filter(x => x.id !== this.word.id);
                 let optionArr= [this.word.translation];
-                console.log(optionArr)
                 optionArr.push(this.getRandomElement(otherWords).translation);
                 optionArr.push(this.getRandomElement(otherWords).translation);
                 optionArr.push(this.getRandomElement(otherWords).translation);
-                console.log(optionArr)
                 optionArr.sort(() => Math.random() - 0.5);
-                console.log(optionArr)
                 this.firstOption = optionArr[0];
                 this.secondOption = optionArr[1];
                 this.thirdOption = optionArr[2];
