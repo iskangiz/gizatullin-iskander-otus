@@ -2,30 +2,9 @@
     <v-container>
         <v-row>
             <v-col cols="2">
-                <v-card max-width="300px" v-if="this.getIsAdmin">
-                    <v-container align="middle">
-                        <v-row align="center">
-                            <v-btn v-for="(user, index) in connectedUsers" :key="index" @click="connectClick(user)">connect to {{user}}</v-btn>&nbsp;
-                        </v-row>
 
-                    </v-container>
-
-                </v-card>
-
-                <v-card max-width="300px">
-                    <v-container>
-                        <v-row>
-                            <h1>Chat</h1>
-                            <div id="inputForm">
-                                <input type="text" id="message" />
-                                <input type="button" id="sendBtn" value="Отправить" @click="sndClick">
-                            </div>
-
-                        </v-row>
-                        <v-row>
-                            <div id="chatroom"></div>
-                        </v-row>
-                    </v-container>
+                <v-card>
+                    <Chat :hub-connection="this.hubConnection" :with-whom-chat="this.withWhomChat"/>
                 </v-card>
             </v-col>
             <v-col>
@@ -37,44 +16,37 @@
 
 <script>
     import ExerciseBlockTraining from "../components/Exercise/ExerciseBlockTraining";
+    import Chat from  "../components/Chat"
     import {mapGetters} from "vuex";
     import * as signalR from '@microsoft/signalr';
 
     export default {
         name: 'ExerciseTrainingView',
-        components: {ExerciseBlockTraining},
-        props: {
-            msg: String
-        },
+        components: {Chat, ExerciseBlockTraining},
         created() {
+            const thisVue = this;
             this.hubConnection = new signalR.HubConnectionBuilder()
-            // const thisVue = this;
-            // this.hubConnection = new signalR.HubConnectionBuilder()
-            //     .withUrl(`${process.env.VUE_APP_NOT_SECRET_CODE}/chat`, { accessTokenFactory: () => this.getToken})
-            //     .build();
-            // this.hubConnection.onclose((x)=>x.start());
-            //
-            // this.hubConnection.on("Send2", function (data) {
-            //     let elem = document.createElement("p");
-            //     elem.appendChild(document.createTextNode(data));
-            //     let firstElem = document.getElementById("chatroom").firstChild;
-            //     document.getElementById("chatroom").insertBefore(elem, firstElem);
-            // });
-            //
-            // this.hubConnection.on("SomeoneConnected", function (data) {
-            //     alert('Someone!'+data)
-            // });
-            //
-            // if(this.getIsAdmin) {
-            //     this.hubConnection.on("ListOfUsers", function (data) {
-            //         thisVue.$data.connectedUsers = data;
-            //     });
-            // }
-            //
-            // this.hubConnection.start();
+                .withUrl(`${process.env.VUE_APP_NOT_SECRET_CODE}/chat`, { accessTokenFactory: () => this.getToken})
+                .build();
+            this.hubConnection.serverTimeoutInMilliseconds = 200000;
+            this.hubConnection.onclose((x)=>x.start());
+
+            this.hubConnection.on("SomeoneConnected", function (data) {
+                thisVue.withWhomChat = data;
+                let blockId = parseInt(thisVue.$route.query.blockId);
+                thisVue.hubConnection.invoke("SendBlockId", data, blockId);
+            });
+
+            if(this.getIsAdmin) {
+                this.hubConnection.on("ListOfUsers", function (data) {
+                    thisVue.$data.connectedUsers = data;
+                });
+            }
+
+            this.hubConnection.start();
         },
         destroyed() {
-            //this.hubConnection.stop();
+            this.hubConnection.stop();
         },
         methods: {
             sndClick() {
@@ -93,7 +65,8 @@
         },
         data: () => ({
             hubConnection: {},
-            connectedUsers: []
+            connectedUsers: [],
+            withWhomChat: null
         })
     }
 </script>

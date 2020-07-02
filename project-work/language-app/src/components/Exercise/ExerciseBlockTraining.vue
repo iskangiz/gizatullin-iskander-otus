@@ -21,9 +21,18 @@
             blockId: Number
         },
         created() {
-            this.getExerciseBlock(this.blockId).then((x) => {
-                this.block = x.data
-            })
+            if (this.blockId != undefined) {
+                this.getExerciseBlock(this.blockId).then((x) => {
+                    this.block = x.data
+                })
+            }
+        },
+        watch: {
+            blockId: function (newBlockId) {
+                this.getExerciseBlock(newBlockId).then((x) => {
+                    this.block = x.data
+                })
+            }
         },
         data: () => ({
             block: {}
@@ -32,7 +41,6 @@
             ...mapActions([
                 'getExerciseBlock'
             ]),
-
         }
     }
 </script>
